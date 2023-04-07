@@ -1,9 +1,10 @@
-use std::collections::btree_map::Values;
-
 fn main() {
     // loops();
-    lesson12();
-    lesson15();
+    // lesson12();
+    // lesson15();
+    // lesson18();
+    // lesson21();
+    lesson23()
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -102,4 +103,98 @@ fn lesson15(){
     }else{
         print!("=5")
     }
+}
+
+// lesson 16 (match)
+fn lesson16(){
+    let some_bool = true;
+    match some_bool {
+        true => println!("its ture"),
+        false => println!("false"),
+    }
+
+    let some_int = 3;
+    match some_int {
+        1 => println!("its 1"),
+        2 => println!("its 2"),
+        3 => println!("its 3"),
+        _ => println!("its something else")
+    }
+}
+
+// lesson 17 (making decision with match)
+fn lesson17(){
+    let my_name = "Bob";
+    match my_name {
+        "jacob" => println!("that's my name"),
+        "Bob" => println!("not my name"),
+        "Alice" => println!("Hello Alice"),
+        _ => println!("nice to meet you")
+    }
+}
+
+// lesson 18 (decision making with match)
+fn lesson18(){
+    let bools = true;
+    match bools {
+        true => println!("its true"),
+        false => println!("its false"),
+    }
+}
+
+// lesson 19 (decision making with match)
+fn lesson19(){
+    let nums = 1;
+    match nums {
+        1 => println!("one"),
+        2 => println!("two"),
+        3 => println!("three"),
+        _ => println!("no number")
+    }
+}
+
+// lesson 20 (repetition with loop)
+fn lesson20(){
+    let mut i = 3;
+    loop{
+        println!("{:?}", i);
+        i = i - 1;
+        if i == 0{
+            break;
+        }
+    }
+    println!("done!");
+}
+
+// lesson 21 (repetition with loop)
+fn lesson21(){
+    let mut i = 0;
+    loop {
+        i = i + 1;
+        if i == 4 {
+            break;
+        }
+        println!("{:?}", &i);
+    }
+    println!("{:?}", &i);
+    println!("done!")
+}
+
+// lesson 22 (repetition with while)
+fn lesson22(){
+    let mut i = 1;
+    while i <= 3 {
+        println!("{:?}", i);
+        i = i+1;
+    }
+}
+
+// lesson 23 (repetition with while)
+fn lesson23(){
+    let mut i = 5;
+    while i >= 1 {
+        println!("{:?}", i);
+        i = i - 1;
+    }
+    println!("done!");
 }
