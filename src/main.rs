@@ -198,3 +198,19 @@ fn lesson23(){
     }
     println!("done!");
 }
+
+// lesson 24 and 25 (enums)
+enum Direction {
+    Left,
+    Right,
+}
+
+fn which_way(){
+    let go = Direction::Left;
+    match go {
+        Direction::Left => println!("left"),
+        Direction::Right => println!("right")
+    }
+}
+
+
