@@ -1,10 +1,15 @@
+mod enums;
+
 fn main() {
     // loops();
     // lesson12();
     // lesson15();
     // lesson18();
     // lesson21();
-    lesson23()
+    // lesson23();
+    // lesson26(Color::Blue);
+    // lesson28();
+    // lesson29();
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -205,7 +210,7 @@ enum Direction {
     Right,
 }
 
-fn which_way(){
+pub fn which_way(){
     let go = Direction::Left;
     match go {
         Direction::Left => println!("left"),
@@ -213,4 +218,199 @@ fn which_way(){
     }
 }
 
+// lesson 26 (enums)
+enum Color {
+    Red,
+    Yellow,
+    Blue
+}
 
+fn lesson26(my_color: Color){
+    match my_color {
+        Color::Red => println!("red"),
+        Color::Yellow => println!("yellow"),
+        Color::Blue => println!("blue")
+    }
+}
+
+// lesson27 (structs)
+// this is an example
+
+// struct ShippingBox{
+//     depth:i32,
+//     width: i32,
+//     height:i32
+// }
+
+// let my_box = ShippingBox{
+//     depth: 2,
+//     width: 2,
+//     height:5,
+// };
+
+// let tall = my_box.height;
+
+// lesson28
+struct GroceryItem{
+    stock:i32,
+    price: f64,
+}
+
+fn lesson28(){
+    let cereal = GroceryItem{
+        stock: 10,
+        price: 2.99
+    };
+    println!("Stock {:?}", cereal.stock);
+    println!("Stock {:?}", cereal.price);
+}
+
+// lesson 29
+#[derive(Debug)]
+enum Flavor{
+    Sparkling, 
+    Sweet,
+    Fruity
+}
+
+#[derive(Debug)]
+struct Drink {
+    flavor: Flavor,
+    fluid_oz: f64,
+}
+
+fn lesson29(){
+    fn print_drink(drink: Drink){
+        match drink.flavor {
+            Flavor::Sparkling => println!("Sparkling"),
+            Flavor::Sweet => println!("Sweet"),
+            Flavor::Fruity => println!("Fruity"),
+        }
+        println!("oz: {:?}", drink.fluid_oz)
+    }
+
+    let sweet = Drink {
+        flavor:Flavor::Sweet,
+        fluid_oz:6.0
+    };
+
+    println!("{:?}",sweet);
+    let fruity = Drink{
+        flavor: Flavor::Fruity,
+        fluid_oz: 6.9
+    };
+
+    println!("{:?}",fruity);
+}
+
+// lesson30 (tuples)
+
+enum Access{
+    Full,
+}
+
+fn one_two_three() -> (i32, i32, i32){
+    (1,2,3)
+}
+
+fn lesson30(){
+    let numbers = one_two_three();
+    let (x, y, z) = one_two_three();
+    println!("{:?}, {:?}", x, numbers.0);
+    println!("{:?}, {:?}", y, numbers.1);
+    println!("{:?}, {:?}", z, numbers.2);
+
+    let (employee, access) = ("jake", Access::Full);
+}
+
+// lesson 31 (tuples)
+fn lesson31(){
+    let cord = (2,3);
+    println!("{:?}, {:?}",cord.0, cord.1);
+
+    // destructure 
+    let (x,y) = (2,3);
+    println!(" {:?} {:?}",x,y );
+    let user_info = ("nahiyan", 20);
+    println!("my name is: {} and my age is {}", user_info.0, user_info.1);
+}
+
+// lesson 32 (tuples)
+
+fn coordinates() -> (i32, i32){
+    (1,7)
+}
+
+fn lesson32() {
+    let (x, y) = coordinates();
+    if y > 5{
+        println!(">5");
+    }else if y < 5 {
+        println!("<5");
+    }else{
+        println!("=5");
+    }
+}
+
+// lesson 33 (Expressions)
+// no code 
+// lesson 34 (use of expression)
+enum Access34 {
+    Admin,
+    Manager,
+    User,
+    Guest
+}
+
+fn lesson34(){
+    let access_level = Access34::Guest;
+    let can_access_file = match access_level{
+        Access34::Admin => true,
+        _ => false,
+    };
+}
+
+// lesson 35 (expression practice)
+fn lesson35(){
+    let value = 100;
+    let is_gt_100 = value > 100;
+}
+
+fn print_message35(gt_100:bool){
+    match gt_100 {
+        true => println!("its big"),
+        false => println!("its small"),
+    }
+}
+
+// lesson 36 (intermediate memory)
+// no code
+
+// lesson37 (ownership)
+// no code 
+
+// lesson 38 (practice ownership)
+struct Book38 {
+    pages: i32,
+    rating: i32
+}
+
+fn display_page_count38(book: &Book38){
+    println!("rating = {:?}", book.pages);
+}
+
+fn display_rating38(book: &Book38){
+    println!("rating = {:?}", book.rating)
+}
+
+fn lesson38(){
+    let book = Book38{
+        pages: 58,
+        rating: 9
+    };
+    display_page_count38(&book);
+    display_rating38(&book);
+}
+
+// lesson39 (ownership) 
+// write code of ownership 
