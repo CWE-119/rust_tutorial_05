@@ -10,6 +10,7 @@ fn main() {
     // lesson26(Color::Blue);
     // lesson28();
     // lesson29();
+    lesson41();
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -413,4 +414,117 @@ fn lesson38(){
 }
 
 // lesson39 (ownership) 
-// write code of ownership 
+struct GroceryItem39{
+    quantity: i32,
+    id:i32
+}
+
+fn display_quantity39(item: &GroceryItem39){
+    println!("quantity: {:?}",item.quantity);
+}
+
+fn display_id39(item: &GroceryItem39){
+    println!("id: {:?}", item.id);
+}
+
+fn lesson39(){
+    let my_item = GroceryItem39{
+        quantity:3,
+        id: 99
+    };
+    display_quantity39(&my_item);
+    display_id39(&my_item);
+}
+
+// lesson40 (impl)
+struct Temperature40{
+    degrees_f:f64,
+}
+
+impl Temperature40{
+
+    fn freezing40() -> Self { // here the Self means the Temperature (name of the impl)
+        Self { degrees_f: 32.0 }
+    }
+
+    fn boiling40() -> Self{
+        Self { degrees_f: 212.0 }
+    }
+
+    fn show_temp40(&self){  // it means we have the Temperature (Temperature40 )somewhere in the program and we are referring to that
+        println!("{:?} degree F", self.degrees_f);
+    }
+}
+
+fn lesson40(){
+    let hot = Temperature40 {degrees_f: 99.9};
+    hot.show_temp40();
+
+    let cold = Temperature40::freezing40();
+    cold.show_temp40();
+
+    let boiling = Temperature40::boiling40();
+    boiling.show_temp40();
+}
+
+// lesson41 (practice impl)
+
+struct Dimension41{
+    width: f64,
+    height: f64,
+    depth: f64
+}
+
+impl Dimension41{
+    fn print(&self){
+        println!("width {:?}", self.width);
+        println!("height {:?}", self.height);
+        println!("depth {:?}", self.depth);
+    }
+}
+
+enum BoxColor21 {
+    Red,
+    Brown
+}
+
+impl BoxColor21 {
+    fn print(&self){
+        match self {
+            BoxColor21::Brown => println!("brown"),
+            BoxColor21::Red => println!("red")
+        }
+    }
+}
+
+struct ShippingBox41{
+    dimension : Dimension41,
+    weight: f64,
+    color: BoxColor21
+}
+
+impl ShippingBox41{
+    fn new(weight:f64, color:BoxColor21, dimension: Dimension41) -> Self{
+        Self{
+            weight,
+            color,
+            dimension
+        }
+    }
+
+    fn print(&self){
+        self.color.print();
+        self.dimension.print();
+        println!("weight {:?}", self.weight);
+    }
+}
+
+fn lesson41(){
+    let small_dimension = Dimension41{
+        width:1.0,
+        height: 2.0,
+        depth: 3.0
+    };
+    let small_box = ShippingBox41::new(5.0, BoxColor21::Red, small_dimension);
+    small_box.print();
+}
