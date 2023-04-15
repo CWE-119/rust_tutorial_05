@@ -10,7 +10,9 @@ fn main() {
     // lesson26(Color::Blue);
     // lesson28();
     // lesson29();
-    lesson41();
+    // lesson41();
+    // lesson42();
+    lesson44();
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -527,4 +529,63 @@ fn lesson41(){
     };
     let small_box = ShippingBox41::new(5.0, BoxColor21::Red, small_dimension);
     small_box.print();
+}
+
+// lesson42 (vectors)
+// multiple data and must be same type, can add , remove and traverse the entries
+
+fn lesson42(){
+    let my_number = vec![1,2,3];
+
+    let mut my_number = Vec::new();
+    my_number.push(1);
+    my_number.push(2);
+    my_number.push(3);
+    my_number.pop();
+    my_number.len();
+
+    let two = my_number[1];
+    println!("{}", two);
+
+    for num in my_number{
+        println!("{:?}", num);
+    }
+}
+
+
+// lesson 43 (use of vector)
+struct Test43{
+    score:i32,
+}
+
+fn lesson43(){
+    let my_score = vec![
+        Test43 {score:90},
+        Test43 {score:99},
+        Test43 {score:77},
+        Test43 {score:93},
+    ];
+
+    for test in my_score{
+        println!("score = {:?}:", test.score);
+    }
+}
+
+// lesson 44 (practice of vector)
+fn lesson44(){
+    let my_numbers = vec![10,20,30, 40];
+    for num in &my_numbers{
+        match num {
+            30 => println!("thirty"),
+            _ => println!("{:?}",num ),
+        }
+    }
+    println!("number if element {:?}", my_numbers.len() );
+}
+
+
+//lesson 45 (string) 
+fn lesson45(){
+    let string_slice = "this is a string slice";
+    let pure_string = String::from("this is a pure string");
 }
