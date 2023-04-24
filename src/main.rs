@@ -12,7 +12,8 @@ fn main() {
     // lesson29();
     // lesson41();
     // lesson42();
-    lesson44();
+    // lesson44();
+    lesson46();
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -588,4 +589,70 @@ fn lesson44(){
 fn lesson45(){
     let string_slice = "this is a string slice";
     let pure_string = String::from("this is a pure string");
+}
+
+// lesson46 (usage of string)
+struct LineItem46{
+    name: String,
+    count: i32,
+}
+
+fn print_name46(name: &str){
+    println!("name: {:?}", name);
+}
+
+fn lesson46(){
+    let receipt = vec![
+        LineItem46{
+            name:"cereal".to_owned(),
+            count:1},
+            LineItem46{
+                name:String::from("fruit"),
+                count:1}
+            ];
+
+    for item in receipt{
+        // println!("{:?}", item.name);
+        print_name46(&item.name);  // here name is a string , in the function we assigned the function to String data type and it cannot print a borrowed string data type so, we need to change the data type that's why we used & sign to change the String to string slice 
+        println!("count {:?}", item.count)
+    }
+}
+
+// lesson 47 (application with string and string slices)
+struct PersonInfo47 {
+    name: String,
+    age: i32,
+    fav_color: String
+}
+
+fn print47(data: &str){
+    println!("{:?}", data)
+}
+
+fn lesson47(){
+
+    let persons = vec![
+        PersonInfo47{
+            name: String::from("Samiul"),
+            age: 17, 
+            fav_color: String::from("Aquamarine")
+        },
+        PersonInfo47{
+            name: String::from("Nahiyan"),
+            age: 20, 
+            fav_color: String::from("Cyan")
+        },
+        PersonInfo47{
+            name: String::from("Khan"),
+            age: 25, 
+            fav_color: String::from("Purple")
+        }
+    ];
+
+    for people in persons {
+        if PersonInfo47.age <= 10 {
+
+        }
+    }
+
 }
