@@ -650,8 +650,11 @@ fn lesson47(){
     ];
 
     for people in persons {
-        if PersonInfo47.age <= 10 {
-
+        if people.age <= 10 {
+            print47( &people.name);
+            print47( &people.fav_color);
+        }else {
+            println!("fuck you");
         }
     }
 
