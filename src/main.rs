@@ -1,3 +1,5 @@
+use std::vec;
+
 mod enums;
 
 fn main() {
@@ -13,7 +15,11 @@ fn main() {
     // lesson41();
     // lesson42();
     // lesson44();
-    lesson46();
+    // lesson46();
+    // lesson52();
+    // lesson54();
+    // lesson55();
+    lesson60();
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -657,5 +663,292 @@ fn lesson47(){
             println!("fuck you");
         }
     }
+
+}
+
+
+// lesson 48 (derive)
+
+#[derive(Debug,Clone, Copy)]
+enum Positoin48 {
+    Manager,
+    Supervisor, 
+    Worker
+}
+#[derive(Debug, Clone, Copy)]
+struct Employee48 {
+    position : Positoin48, 
+    work_hour: i64,
+}
+
+fn print_employee48(emp: Employee48){
+    println!("{:?}", emp)
+}
+
+fn lesson48() {
+
+    let me = Employee48{
+        position: Positoin48::Worker,
+        work_hour: 40
+    };
+    // for derive debug print we can automatically print the function 
+    print_employee48(me);  // this is a clone and a copy 
+}
+
+// lesson 50 (enum revisited)
+
+enum Mouse50{
+    LeftClick, 
+    RightClick, 
+    MiddleClick,
+    Scroll(i32), 
+    Move(i32, i32)
+}
+
+enum PromoDiscount50 {
+    NewUser, 
+    Holiday(String)
+}
+
+enum Discount50 {
+    Percent(f64),
+    Flat(i32), 
+    Promo(PromoDiscount50),
+    Custom(String)
+}
+
+// lesson51 (advance Match)
+enum Discount51 {
+    Percent(f64),
+    Flat(i32), 
+    Promo(PromoDiscount50),
+    Custom(String)
+}
+
+struct Ticket51{
+    event: String, 
+    price: i32
+}
+
+fn lesson51(){
+
+    let n = 3;
+    match n {
+        3 => println!("three"),
+        other  => println!("number: {:?}", other),
+    }
+
+    let flat = Discount51::Flat(2);
+    match flat {
+        Discount51::Flat(2) => println!("flat 2"),
+        Discount51::Flat(amount) => println!("flat discount of {:?}", amount),
+        _ => (), // blank bracket means returning nothing 
+    }
+
+    let concert = Ticket51{
+        event: "concert".to_owned(),
+        price: 50,
+    };
+    match concert {
+        Ticket51 { price:50, event } => println!("event @ 50 {:?}", event),
+        Ticket51 { price, .. } => println!("price = {:?}", price),
+    }
+}
+
+// lesson 52 (advance match practice)
+
+enum Ticket52 {
+    Standard(f64),
+    Backstage(String, f64),
+    Vip(String, f64),
+}
+
+
+fn lesson52(){
+    let tickets = vec![
+        Ticket52::Backstage("billy".to_owned(), 50.0),
+        Ticket52::Standard(15.0), 
+        Ticket52::Vip("Amy".to_owned(), 30.0),
+    ];
+    for ticket in tickets{
+        match ticket {
+            Ticket52::Backstage(holder,price ) => println!("standard ticket holder name {:?} and price {:?}", holder, price),
+            Ticket52::Standard(price) => println!("standhard ticket price {:?}", price),
+            Ticket52::Vip(holder,price) => println!("Vip ticket holder name {:?} and price {:?}", holder, price), 
+            _ => println!("i don't know what you are looking for ")
+        }
+    }
+}
+
+
+// lesson 53 (option type)
+
+// enum Option<T> {
+//     Some(T),  //  it represents some Data
+//     None,  // it represents no data
+// }
+
+struct Customer53 {
+    age: Option<i32>,
+    email: String
+}
+
+fn lesson53(){
+    let mark = Customer53 {
+        age: Some(22), email: "mark@gmail.com".to_owned(),
+    };
+    let beaky = Customer53 {
+        age: None, email: "beacky@gmail.com".to_owned(),
+    };
+
+    match beaky.age {
+        Some(age) => println!("customer is {:?} years old", age),
+        None => println!("customer age not provided")
+    }
+}
+
+struct GroceryItem53 {
+    name: String,
+    qty: i32
+}
+
+fn find_quantity53(name: &str) -> Option<i32>{
+    let groceries = vec![
+
+    GroceryItem53 {name : "banana".to_owned(), qty:4},
+    GroceryItem53 {name : "eggs".to_owned(), qty:12},
+    GroceryItem53 {name : "bread".to_owned(), qty:1},
+    ];
+    for item in groceries{
+        if item.name == name{  // if item name is equal to the name we provided
+            return Some(item.qty);  // it will return the quantity of that item 
+        }
+    }
+    None  // if no item with that name it will return None 
+}
+
+// lesson 54 (option can be used)
+struct Survey54 {
+    q1: Option<i32>,
+    q2: Option<bool>,
+    q3: Option<String>
+}
+
+fn lesson54(){
+    let response = Survey54{
+        q1: Some(12),
+        q2: Some(true),
+        q3: Some("A".to_owned())
+    };
+
+    // checking the q1 of response
+    match response.q1 {
+        Some(ans) => println!("{:?}", ans),
+        None => println!("q1 no response")
+    }
+    // checking the q2 of response
+    match response.q2 {
+        Some(ans) => println!("{:?}", ans),
+        None => println!("q1 no response")
+    }
+    // checking the q3 of response 
+    match response.q3 {
+        Some(ans) => println!("{:?}", ans),
+        None => println!("q1 no response")
+    }
+}
+
+// lesson 55 ( optional data utilization )
+struct Student55 {
+    name: String,
+    locker: Option<i32>
+}
+
+fn lesson55(){
+    let mary = Student55{
+        name: "Mary".to_owned(),
+        locker: Some(3)
+    };
+    println!("student {:?}", mary.name);
+    match mary.locker {
+        Some(num) => println!("locker number {:?}", num),
+        None => println!("no locker assigned")
+    }
+}
+
+// lesson 56 Documentation 
+// learn it ur-self not important now 
+
+
+// lesson57 
+// boring stuff
+
+// lesson 59 (Result)
+// successful Ok(T)
+// error(E)
+
+// enum Result<T, E>{
+//     Ok(T),
+//     Err(E)
+// }
+
+
+fn lesson59() {
+    // this is just an example code , it will not work cuz there is no type as SoundData
+    // fn get_sound(name: &str ) -> Result<SoundDate, String>{
+    //     if name == "alert"{
+    //         Ok(SoundDate::new("alert")),
+    //     }else {
+    //         Err("unable to find sound data".to_owned())
+    //     }
+    // }
+    
+    // let sound = get_sound("alert");
+    // match sound {
+    //     Ok(_) => println!("located sound data"),
+    //     Err(e) => println!("error {:?}", e)
+    // }
+}
+
+// lesson 60 (use of Result<T, E>)
+
+#[derive(Debug)]
+enum MenuChoice60{
+    MainMenu,
+    Start,
+    Quit
+}
+
+fn get_choice60(input: &str) -> Result<MenuChoice60, String>{
+    match input{
+        "mainmenu" => Ok(MenuChoice60::MainMenu),
+        "start" => Ok(MenuChoice60::Start),
+        "quit" => Ok(MenuChoice60::Quit),
+        _ => Err("menu chioce not found".to_owned())
+    }
+}
+
+// normal way
+fn print_choice60(choice: &MenuChoice60){
+    println!("choice = {:?}", choice);
+}
+
+// second way
+fn pick_choice60(input: &str) -> Result<(), String>{ // () means return  none 
+    let choice:MenuChoice60 = get_choice60(input)?;
+    print_choice60(&choice);
+    Ok(())
+}
+
+fn lesson60(){
+
+    // first way
+    let choice: Result<MenuChoice60, _> = get_choice60("mainmenu");
+    match choice {
+        Ok(inner_choice) => print_choice60(&inner_choice),
+        Err(e) => println!("error = {:?}", e)
+    }
+    // second way
+    pick_choice60("start");
 
 }
