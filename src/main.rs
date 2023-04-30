@@ -1,4 +1,5 @@
 use std::vec;
+use std::collections::HashMap;
 
 mod enums;
 
@@ -19,7 +20,11 @@ fn main() {
     // lesson52();
     // lesson54();
     // lesson55();
-    lesson60();
+    // lesson60();
+    // lesson62();
+    // lesson64();
+    // lesson65();
+    lesson72();
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -952,3 +957,265 @@ fn lesson60(){
     pick_choice60("start");
 
 }
+
+
+// lesson 61 (practice of Result)
+struct Customer61{
+    age:i32
+}
+
+fn try_purchanse61(customer: &Customer61) -> Result<(), String>{  // first type is the OK tyye and 2nd type is Err type , if ok nth returns and if error String will return 
+    if customer.age < 21 {
+        Err("customer must be 21 years old".to_owned()) // if not ok it will return string
+    }else{
+        Ok(())  // if ok no data
+    }
+}
+
+fn lesson61(){
+    let ashly = Customer61{age:61};
+    let purched = try_purchanse61(&ashly);
+    println!("{:?}", &purched);
+}
+
+// lesson 62 Results and the question mark operator 
+enum Position62{
+    Maintenance,
+    Marketing,
+    Manager,
+    LineSupervisor,
+    KitchenStaff,
+    AssemblyTech
+}
+
+enum Status62 {
+    Active, 
+    Terminated
+}
+
+struct Employee62{
+    position: Position62,
+    status: Status62
+}
+
+fn try_access62(employee62: &Employee62) -> Result<(), String>{
+    match employee62.status {
+        Status62::Terminated => return Err("terminated".to_owned()), // if the status is Terminated the code will end here because of the early return
+        _ => (),
+    }
+    match employee62.position {
+        Position62::Maintenance => Ok(()),
+        Position62::Marketing => Ok(()),
+        Position62::Manager => Ok(()),
+        _ => Err("invalid position".to_owned())
+    }
+}
+
+fn print_access62(employee62: &Employee62) -> Result<(), String>{
+    let attempt_access = try_access62(employee62)?;  // ? return us the OK or Err of the result type of the function, normally a function with the result type return , returns us Result type, but if we want only OK or Err we can use ? operator (you can see lesson 59)
+    println!("access ok");
+    Ok(())
+
+}
+
+fn lesson62(){
+    let manager = Employee62{
+        position: Position62::KitchenStaff,
+        status: Status62::Active 
+    };
+    match print_access62(&manager) {
+        Err(e) => println!("access denied {:?}", e),
+        _ => ()
+    }
+}
+
+// lesson 63 (hashmap)
+
+// hashmap does not keep the order of the items 
+// hashmap can have same data type values
+// .insert()  to insert value 
+// .remove()  to remove value 
+// for (key, value) in name.iter(){}
+
+// lesson 64 (write code in hashmap)
+#[derive(Debug)]
+struct Locker64{
+    content: String,
+}
+fn lesson64(){
+    let mut locker64 = HashMap::new();
+    locker64.insert(1, Locker64{content:"Locker 1".to_owned()});
+    locker64.insert(2, Locker64{content:"Locker 2".to_owned()});
+    locker64.insert(3, Locker64{content:"Locker 3".to_owned()});
+
+    for (k, v) in locker64.iter(){
+        println!("key {:?} and the value {:?}", k, v);
+    }
+}
+
+// lesson 65 (program that utilizes hashmap)
+
+fn lesson65(){
+    let mut stock = HashMap::new();
+    stock.insert("chair", 5);
+    stock.insert("bed", 3);
+    stock.insert("table", 2);
+    stock.insert("couch", 0);
+
+    let mut total_stock = 0;
+    for (k, v) in stock.iter(){
+        total_stock = total_stock + v;
+        let stock_count = if v == &0{
+            "out of stock ".to_owned()
+        }
+        else{
+            format!("{:?}", v)
+        };
+        println!("item ={:?}, stock = {:?}", k, v)
+    }
+// not finished yot
+}
+
+
+// lesson 66 (closers)
+fn lesson66(){
+    let add = |a,b| a + b;
+    add(5, 6);
+}
+
+// lesson 67 (map combinator)
+
+// while working with data when you transform things from one to another is called mapping 
+// map works with option and it need a function to work with 
+
+// fn maybe_num67() -> Option<i32> {
+
+// }
+// fn maybe_word67() -> Option<i32> {
+
+// }
+// fn lesson67(){
+//     let plus_one = match maybe_num67(){
+//         Some(num) => Some(num + 1),
+//         None => None
+//     };
+//     let plus_one = maybe_num67().map(|num|num + 1);
+
+//     let word_length = maybe_word67().map(|word| word.len());
+//     // not finished 
+// }
+
+// lesson 68 (practice map combinator )
+#[derive(Debug)]
+struct User68{
+    user_id:i32,
+    name: String
+}
+
+    // locates a user id based on the name 
+fn find_user68(name: &str) -> Option<i32>{
+    let name = name.to_ascii_lowercase();
+    match name.as_str() {
+        "sam" => Some(1),
+        "matt" => Some(2),
+        "katie" => Some(3),
+        _ => None
+    }
+}
+
+fn lesson68(){
+
+}
+
+// lesson 69
+
+// lesson 70
+
+// lesson 71 (iterator)
+
+fn lesson71(){
+    let number = vec![1,2,3,4,5];
+
+    let plus_one: Vec<_> = number.iter().map(|num| num + 1 ).collect();
+    // let plus_one1: Vec<_> = number.iter().filter(|num| num <= 1 ).collect();
+    // let plus_one2: Vec<_> = number.iter().find(|num| num == 1 ).collect();
+}
+
+// lesson72 (utilize iterator)
+fn lesson72(){
+    let data = vec![1,2,3,4,5];
+
+    let iter_data: Vec<_> = data.iter().map(|num| num * 3).filter(|num| num > &10).collect();
+    for i in iter_data{
+        println!("{:?}", i)
+    }
+}
+
+// lesson 73 (ranges)
+
+fn lesson73(){
+    let range = 1..=3; // here it will include the 3
+    let range = 1..3;  // here it will not include 3
+
+    for i in 1..4{
+        println!("{:?}", i)
+    }
+
+    for i in 'a'..'f'{
+        println!("{:?}", i)
+    }
+}
+
+
+// lesson 74 (if let )
+enum Color74{
+    Red,
+    Blue
+}
+fn lesson74(){
+
+
+
+    let maybe_user = Some("jerry");
+    match maybe_user {
+        Some(user) => println!("user = {:?}", user),
+        None => println!("No user")
+    }
+
+
+    // if let matches the one specific thing i am looking for 
+
+    if let Some(user) = maybe_user{
+        println!("user = {:?}", user)
+    }else{
+        println!("its not red")
+    }
+
+    let red = Color74::Red;
+    if let Color74::Red = red{
+        println!("its red");
+    }else {
+        println!("its not red");
+    }
+}
+
+
+// lesson 75  while let 
+fn lesson75(){
+    let mut data = Some(3);
+
+    while let Some(i) = data{
+        println!("loop");
+        data = None;
+    }
+
+    let number = vec![1,2,3];
+    let mut number_iter = number.iter();
+    while let Some(num) = number_iter.next() {  // .next will return a optional value if there is a value to return 
+        println!("num = {:?}", num);
+    }
+    println!("done");
+}
+
+// lesson 76
+// need to code later
