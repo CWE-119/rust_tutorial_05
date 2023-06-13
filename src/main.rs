@@ -24,7 +24,15 @@ fn main() {
     // lesson62();
     // lesson64();
     // lesson65();
-    lesson72();
+    // lesson68()
+    // lesson72();
+    // lesson80();
+    // lesson81();
+
+    // lessen85()
+
+    //  lesson 87 and 88
+    lessen87()
 }
 
 fn add(a:i64, b:i64) -> i64{
@@ -40,6 +48,7 @@ fn add(a:i64, b:i64) -> i64{
 
 fn loops(){
     let mut a = 0;
+    
     loop{
         if a == 5{
             break;
@@ -1113,10 +1122,11 @@ struct User68{
 }
 
     // locates a user id based on the name 
-fn find_user68(name: &str) -> Option<i32>{
+            // it takes a borrowed string
+fn find_user68(name: &str) -> Option<i32>{  // here it returns an option<i32> which is an fucntion
     let name = name.to_ascii_lowercase();
     match name.as_str() {
-        "sam" => Some(1),
+        "sam" => Some(1),  // if the name matches it returns the some(numbers) which is an i32
         "matt" => Some(2),
         "katie" => Some(3),
         _ => None
@@ -1124,12 +1134,80 @@ fn find_user68(name: &str) -> Option<i32>{
 }
 
 fn lesson68(){
+    let user_name = "sam";
+    let user = find_user68(user_name) // and option functions a option function we can use use a map function which checks the number of the name 
+    .map(|user_id| // inside the pipe |parameter| which here is i32
+        User68{  // here is the body which makes a struct
+        user_id, // here it put the parameter or name number of the name 
+        name: user_name.to_owned()  // here it puts the name and set it to String cuz struct takes string 
+    });
 
+    // print out the user struct if found or a "not found " if not 
+    match user {  // here it checks the user's return
+        // we are using some because map returns iter and iter returns some
+        Some(user) => println!("{:?}", user),  // if return is Some(user), it prints the usee
+        None => println!("user not found")
+    }
 }
 
-// lesson 69
+// lesson 69 (Option combinator)
+fn lesson69(){
+    let a: Option<i32> = Some(1);
+    dbg!(a);
+    let a_is_some = a.is_some(); // returns True or False if have Data
+    dbg!(a_is_some);
+    let a_is_none = a.is_none(); // returns True or False if have no Data
+    dbg!(a_is_none);
+    let a_mapped = a.map(|num|num + 1);
+    dbg!(a_mapped);
+    let a_filter= a.filter(|num| num == &1); // if value true we keep else we throw (when we use filter we borrows the number)
+    dbg!(a_filter);
+    let a_or_else = a.or_else(|| Some(5));  // if have data return nothing else if have no data returns Some(5)
+    dbg!(a_or_else);
+    let unwrapped = a.unwrap_or_else(|| 0); // makes the Option<i32> to i32 and assign the variable 
+    dbg!(unwrapped);
+}
+// lesson 70 (option combinator)
+enum Access70{
+    Admin,
+    User,
+    Guest
+}
 
-// lesson 70
+fn maybe_access(name: &str) -> Option<Access70>{
+    match name {
+        "admin" => Some(Access70::Admin),
+        "gary" => Some(Access70::User),
+        _ => None
+    }
+}
+
+fn root70() -> Option<Access70>{
+    Some(Access70::Admin)
+}
+
+
+fn check_part71() -> bool{
+    maybe_access("admin")  // first it check if it has the access or not
+    .is_some() // if yes than it returns True or it will return False
+}
+
+fn check_part72() -> Option<Access70>{
+    // "root" is equivalent to Access::Admin, but it is 
+    // not listed in the maybe_access function
+    //  Note: Use or_else and root().
+    maybe_access("root").or_else(||root70())
+}
+
+fn check_part73() -> Access70{
+    maybe_access("Alice").unwrap_or_else(||Access70::Guest)
+}
+
+fn lesson70(){
+    check_part71();
+    check_part72();
+    check_part73();
+}
 
 // lesson 71 (iterator)
 
@@ -1218,4 +1296,250 @@ fn lesson75(){
 }
 
 // lesson 76
-// need to code later
+
+pub mod greet76{
+    
+    pub fn hello76(){
+        println!("hello")
+    }
+    
+    pub fn goodbye76(){
+        println!("goodbye")
+    }
+    
+}
+
+pub mod maths76{
+
+    pub fn add76(a:i32, b:i32) -> i32{
+        a+b
+    }
+    
+    fn sub76(a:i32, b:i32) -> i32{
+        a - b
+    }
+
+}
+
+
+fn lesson76(){
+    use greet76::*;  // first we have to import  the module into the scope to use and ::* means import everything from that module
+    greet76::hello76();
+
+    use maths76::*;
+    maths76::add76(1,1);
+}
+
+// lesson77 (inline modules)
+
+
+// lesson 78 (testing)
+// need to write code
+
+// lesson 79 (Testing)
+// need to code
+
+// lessen80 (external crate)
+use humantime::format_duration;
+use libp2p::futures::sink::Buffer;
+use std::time::Duration;
+fn lesson80(){
+    let d = Duration::from_secs(9876);
+    println!("{}",format_duration(d));
+}
+
+// lesson 81
+use chrono::prelude::*;
+
+fn lesson81(){
+    let utc: DateTime<Utc> = Utc::now();
+    println!("{}", utc);
+    let local: DateTime<Local> = Local::now();
+    println!("{}", local);
+    println!("{}",local.format("%Y-%m-%d %H:%M:%S").to_string());
+}
+
+//lesson82 external Modules
+// do it later
+// lesson 83 external Modules
+// do it later
+
+// lesson 84 (user input)
+use std::io;
+
+fn get_input84() -> io::Result<String>{
+    let mut buffer = String::new();
+    io::stdin()  // this is standard in that read data form the terminal
+    .read_line(&mut buffer)?; // it will read line if ok it will give us the text
+    Ok(buffer
+        .trim() // enter is also counted as data so we need to trim it
+        .to_owned() // trim returns a borrowed string, we turned it to String
+    )
+}
+
+fn lessen84(){
+    let mut all_input = vec![];
+    let mut times_input = 0;
+    while times_input < 2 {
+        match get_input84() {
+            Ok(words) => {
+                all_input
+                .push(words);
+                times_input +=1;
+            }
+            Err(e) => println!("{e}")
+        }
+    }
+
+    for input in all_input{
+        println!("Original: {:?}, capitalized: {:?}", input, input.to_uppercase());
+    }
+}
+
+
+// lesson 85 (user input)
+enum PowerState85 {
+    
+    Off,
+    Sleep,
+    Reboot,
+    Shutdown,
+    Hibernate
+
+}
+
+// use a match expression to convert the user input into the power state enum
+impl PowerState85 {
+    fn new(state: &str) -> Option<PowerState85>{
+        let state = state
+        .trim()
+        .to_lowercase();
+
+        // String -> &str 
+        match state.as_str() {
+            "off" => Some(PowerState85::Off),
+            "sleep" =>Some(PowerState85::Sleep),
+            "reboot"=> Some(PowerState85::Reboot),
+            "shutdown" => Some(PowerState85::Shutdown),
+            "hibernate" => Some(PowerState85::Hibernate),
+            _ => None
+        }
+    }
+}
+
+fn print_power_action85(state: PowerState85){
+    use PowerState85::*;
+    match state{
+        Off => println!("turning off"),
+        Sleep => println!("Sleeping"),
+        Reboot => println!("rebooting"),
+        Shutdown => println!("shutting down"),
+        Hibernate => println!("hibernating")
+    }
+}
+
+fn lessen85(){
+    let mut buffer = String::new();
+    let user_input = io::stdin().read_line(&mut buffer);
+    if user_input.is_ok(){
+        match PowerState85::new(&buffer)  // this returns Options so we need to match Some or none
+        {
+            Some(state)=>{print_power_action85(state)}
+            None => println!("invalid power state")
+        }
+    }
+    else
+    {
+        println!("Error Reading input");
+    }
+}
+
+// lesson 86 
+// interactive billing Application
+// nth here
+
+// lesson 87 , 88 , 89 , 90 (project)
+
+#[derive(Debug, Clone)]
+struct Bill{
+    name: String,
+    amount: f64 
+}
+
+struct Bills{
+    inner : Vec<Bill>
+}
+
+impl Bills{
+    fn new() -> Self{
+        Self { inner: vec![] }
+    }
+
+    fn add(&mut self, bill: Bill){
+        self.inner.push(bill);
+    }
+
+    fn get_all(&self) -> Vec<&Bill>{
+        self.inner
+        .iter()  // it automatically borrow
+        .collect()  // it collect the iterator in to the new Vec
+    }
+}
+
+fn get_input87() -> Option<String> {
+    let mut buffer = String::new();
+    while io::stdin().read_line(&mut buffer).is_err(){
+        println!("print enter your data again")
+    }
+    let input = buffer.trim();
+    if &input == &""{
+        None
+    }else{
+        Some(input.to_string())
+    }
+}
+
+enum MainMenu87{
+    addBill,
+    viewBill,
+}
+
+
+impl MainMenu87{
+    fn from_str(input: &str) -> Option<MainMenu87>{
+         match input {
+            "1" => Some(MainMenu87::addBill),  // both are same shit 
+            "2" => Some(Self::viewBill),
+            _ => None
+         }
+    }
+
+    fn show(){
+        println!("");
+        println!(" == Bill Manager ==");
+        println!("1. Add Bill");
+        println!("2. View Bill");
+        println!("");
+        println!("Enter selection");
+    }
+}
+
+fn lessen87(){
+    // create bill structure
+    loop {
+        MainMenu87::show();
+        // display the menu 
+        let input = get_input87()
+        .expect("no data entered");
+
+        match MainMenu87::from_str(input.as_str()){
+            Some(MainMenu87::addBill) => (),
+            Some(MainMenu87::viewBill) => (),
+            None => return, // return to exit out of the program 
+        }
+
+        // need to continue from 90
+        
+        // make a choice, based on input
+    }
+}
